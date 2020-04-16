@@ -124,8 +124,8 @@ gan.compile(optimizer=optimizer, loss='binary_crossentropy')
 
 
 import time
-iters = 15000
-batch_size = 8
+iters = 500
+batch_size = 16
 
 RES_DIR = 'results'
 FILE_PATH = '%s/generated_%d.png'
@@ -165,20 +165,20 @@ for step in tqdm(range(iters)):
     if start > images.shape[0] - batch_size:
         start = 0
     print(166)
-    if step % 50 == 49:
-        gan.save_weights('drive/My Drive/gan.h5')
+    # if step % 50 == 49:
+    #     gan.save_weights('drive/My Drive/gan.h5')
 
-        print('%d/%d: d_loss: %.4f,  a_loss: %.4f.  (%.1f sec)' % (step + 1, iters, d_loss, a_loss, time.time() - start_time))
+    print('%d/%d: d_loss: %.4f,  a_loss: %.4f.  (%.1f sec)' % (step + 1, iters, d_loss, a_loss, time.time() - start_time))
 
-        control_image = np.zeros((WIDTH * CONTROL_SIZE_SQRT, HEIGHT * CONTROL_SIZE_SQRT, CHANNELS))
-        control_generated = generator.predict(control_vectors)
-        for i in range(CONTROL_SIZE_SQRT ** 2):
-            x_off = i % CONTROL_SIZE_SQRT
-            y_off = i // CONTROL_SIZE_SQRT
-            control_image[x_off * WIDTH:(x_off + 1) * WIDTH, y_off * HEIGHT:(y_off + 1) * HEIGHT, :] = control_generated[i, :, :, :]
-        im = Image.fromarray(np.uint8(control_image * 255))
-        im.save(FILE_PATH % (RES_DIR, images_saved))
-        images_saved += 1
+    control_image = np.zeros((WIDTH * CONTROL_SIZE_SQRT, HEIGHT * CONTROL_SIZE_SQRT, CHANNELS))
+    control_generated = generator.predict(control_vectors)
+    for i in range(CONTROL_SIZE_SQRT ** 2):
+        x_off = i % CONTROL_SIZE_SQRT
+        y_off = i // CONTROL_SIZE_SQRT
+        control_image[x_off * WIDTH:(x_off + 1) * WIDTH, y_off * HEIGHT:(y_off + 1) * HEIGHT, :] = control_generated[i, :, :, :]
+    im = Image.fromarray(np.uint8(control_image * 255))
+    im.save(FILE_PATH % (RES_DIR, images_saved))
+    images_saved += 1
     print(181)
 
 
