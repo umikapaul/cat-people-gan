@@ -5,7 +5,7 @@ import os
 
 PIC_DIR = "./celeba-dataset/img_align_celeba/img_align_celeba/"
 from tqdm import tqdm
-IMAGES_COUNT = 50
+IMAGES_COUNT = 100
 
 ORIG_WIDTH = 178
 ORIG_HEIGHT = 208
@@ -34,10 +34,15 @@ for i in range(25):
 plt.show()
 
 
-from keras import Input
-from keras.layers import Dense, Reshape, LeakyReLU, Conv2D, Conv2DTranspose, Flatten, Dropout
-from keras.models import Model
-from keras.optimizers import RMSprop
+from tensorflow.keras import Input
+from tensorflow.keras.layers import Dense, Reshape, LeakyReLU, Conv2D, Conv2DTranspose, Flatten, Dropout
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import RMSprop
+
+# from keras import Input
+# from keras.layers import Dense, Reshape, LeakyReLU, Conv2D, Conv2DTranspose, Flatten, Dropout
+# from keras.models import Model
+# from keras.optimizers import RMSprop
 
 LATENT_DIM = 32
 CHANNELS = 3
@@ -125,14 +130,14 @@ gan.compile(optimizer=optimizer, loss='binary_crossentropy')
 
 import time
 iters = 500
-batch_size = 16
+batch_size = 8
 
 RES_DIR = 'results'
 FILE_PATH = '%s/generated_%d.png'
 if not os.path.isdir(RES_DIR):
     os.mkdir(RES_DIR)
 
-CONTROL_SIZE_SQRT = 6
+CONTROL_SIZE_SQRT = 3
 control_vectors = np.random.normal(size=(CONTROL_SIZE_SQRT**2, LATENT_DIM)) / 2
 
 start = 0

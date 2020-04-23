@@ -4,6 +4,9 @@
 /ganenv/*
 /celeba-dataset/*
 /Cat-faces-dataset-master/*
+/resized-cats/*
+*.ckpt*
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
